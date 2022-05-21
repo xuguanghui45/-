@@ -1,0 +1,30 @@
+/*@!Encoding:936*/
+includes
+{
+  
+}
+
+variables
+{
+    msTimer cycle;               //定时器
+  message 0x18EA0B01x RQST;        //定义一个请求报文,Message ID以x结尾的ID表示扩展帧
+}
+
+on timer cycle               //定时器动作
+{
+  settimer(cycle,100);         //定时器100ms循环
+  output(RQST);              //发送报文
+
+}
+
+
+
+on start                    //启动
+{
+  settimer(cycle,100);       //定时器1s启动
+  output(RQST);
+  RQST.dlc=3;
+  RQST.byte(0)=0x70;        //请求CVW
+  RQST.byte(1)=0xFE;
+  RQST.byte(2)=0x00;
+}
